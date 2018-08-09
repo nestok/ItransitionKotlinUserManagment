@@ -1,0 +1,84 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: yury
+    changes:
+    - createTable:
+        tableName: hallo
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: world
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: blet
+            type: varchar(255)
+            constraints:
+              nullable: false
+
+- changeSet:
+    id: 2
+    author: yury
+    changes:
+    - createTable:
+        tableName: person
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: username
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: password
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: role
+            type: varchar(255)
+            constraints:
+              nullable: false
+- changeSet:
+    id: 3
+    author: yury
+    changes:
+    - insert:
+        tableName: hallo
+        columns:
+        - column:
+            name: world
+            value: super
+        - column:
+            name: blet
+            value: poper
+- changeSet:
+    id: 4
+    author: yury
+    changes:
+    - insert:
+          tableName: person
+          columns:
+          - column:
+                name: username
+                value: Vasya
+          - column:
+                name: password
+                value: Pupkin
+          - column:
+                name: role
+                value: ROLE_ADMIN
