@@ -1,54 +1,32 @@
 package com.funproject.developer.funproject.controller
 
-import com.funproject.developer.funproject.model.Person
-import com.funproject.developer.funproject.model.UserRole
-import com.funproject.developer.funproject.repository.PersonRepository
+import com.funproject.developer.funproject.dto.errorDto.ErrorDto
+import com.funproject.developer.funproject.dto.userDto.UserAddDto
+import com.funproject.developer.funproject.model.User
 import com.funproject.developer.funproject.service.UserService
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin(origins = arrayOf("http://localhost:4200"), maxAge = 3600)
 class UserController {
 
     @Autowired
-    lateinit var repository: PersonRepository
+    lateinit var userService: UserService
 
-    @RequestMapping("/save")
-    fun save(): String {
-        repository.save(Person("Jack", "Smith", UserRole.ROLE_USER))
-        repository.save(Person("Adam", "Johnson", UserRole.ROLE_USER))
-        repository.save(Person("Kim", "Smith", UserRole.ROLE_USER))
-        repository.save(Person("David", "Williams", UserRole.ROLE_USER))
-        repository.save(Person("Peter", "Davis", UserRole.ROLE_USER))
-
-        return "Done"
+    @GetMapping("/users")
+    fun findAllUsers(): Iterable<User> {
+        return userService.findAllUsers()
     }
 
-//    private val userService: UserService
-//
-//
-//    @RequestMapping("/save")
-//    fun save(): String {
-//        return userService.saveUsers()
-//    }
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.OK)
+    fun register(@RequestBody user: UserAddDto) {
+        userService.register(user)
+    }
 
-    @RequestMapping("/users")
-    fun findAllUsers() = repository.findAll()
-
-
-    @RequestMapping("/findall")
-    fun findAll() = repository.findAll()
-
-    @RequestMapping("/findbyid/{id}")
-    fun findById(@PathVariable id: Long)
-            = repository.findById(id)
-
-    @RequestMapping("findbylastname/{lastName}")
-    fun findByLastName(@PathVariable lastName: String)
-            = repository.findByUsername(lastName)
+//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Cannot operate function")  // 404
+//    inner class ErrorRegisterUserException : RuntimeException()
 
 }
