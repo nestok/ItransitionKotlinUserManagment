@@ -2,16 +2,17 @@ package com.funproject.developer.funproject.dto.loginDto
 
 import com.funproject.developer.funproject.model.User
 
-class LoginResponseDto(private val token: String?, user: User?) {
-    private var userId: Long = 0
-    private var username: String = ""
-    private var userRole: String = ""
+class LoginResponseDto(val token: String?) {
+    var userId: Long = 0
+    var username: String = ""
+    var userRole: String = ""
 
-    init {
+    constructor(token: String?, user: User?) : this(token){
         if (user != null) {
-            this.userId = user.getId()!!
-            this.username = user.getUsername()
-            this.userRole = user.getRole().toString()
+            this.userId = user.id
+            this.username = user.username
+            this.userRole = user.role.toString()
         }
     }
+
 }

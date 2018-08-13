@@ -1,0 +1,80 @@
+#databaseChangeLog:
+#- changeSet:
+#      id: 4
+#      author: yury
+#      changes:
+#      - insert:
+#            tableName: person
+#            columns:
+#            - column:
+#                  name: username
+#                  value: Jack
+#            - column:
+#                  name: password
+#                  value: $2a$10$6kjSEhse7DJ5FT/uJQB.5uDMIyO9dTLc3k5ancHJINlYT4cwNX.aG
+#            - column:
+#                  name: email
+#                  value: blabla@mail.ru
+#            - column:
+#                  name: role
+#                  value: ROLE_USER
+#      - insert:
+#            tableName: person
+#            columns:
+#            - column:
+#                  name: username
+#                  value: Adam
+#            - column:
+#                  name: password
+#                  value: $2a$10$6kjSEhse7DJ5FT/uJQB.5uDMIyO9dTLc3k5ancHJINlYT4cwNX.aG
+#            - column:
+#                  name: email
+#                  value: blabla1@mail.ru
+#            - column:
+#                  name: role
+#                  value: ROLE_USER
+#      - insert:
+#            tableName: person
+#            columns:
+#            - column:
+#                  name: username
+#                  value: Kim
+#            - column:
+#                  name: password
+#                  value: $2a$10$6kjSEhse7DJ5FT/uJQB.5uDMIyO9dTLc3k5ancHJINlYT4cwNX.aG
+#            - column:
+#                  name: email
+#                  value: blabla2@mail.ru
+#            - column:
+#                  name: role
+#                  value: ROLE_USER
+#      - insert:
+#            tableName: person
+#            columns:
+#            - column:
+#                  name: username
+#                  value: David
+#            - column:
+#                  name: password
+#                  value: $2a$10$6kjSEhse7DJ5FT/uJQB.5uDMIyO9dTLc3k5ancHJINlYT4cwNX.aG
+#            - column:
+#                  name: email
+#                  value: blabla3@mail.ru
+#            - column:
+#                  name: role
+#                  value: ROLE_USER
+#      - insert:
+#            tableName: person
+#            columns:
+#            - column:
+#                  name: username
+#                  value: Peter
+#            - column:
+#                  name: password
+#                  value: $2a$10$6kjSEhse7DJ5FT/uJQB.5uDMIyO9dTLc3k5ancHJINlYT4cwNX.aG
+#            - column:
+#                  name: email
+#                  value: blabla4@mail.ru
+#            - column:
+#                  name: role
+#                  value: ROLE_USER
