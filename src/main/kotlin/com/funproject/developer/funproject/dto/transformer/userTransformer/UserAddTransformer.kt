@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class UserAddTransformer {
 
     fun makeModel(userAddDto: UserAddDto): User {
-        val user = User(username = userAddDto.username, password = userAddDto.password,
+        return User(firstname = userAddDto.firstName, lastname = userAddDto.lastName,
+                username = userAddDto.username, password = userAddDto.password,
                 email = userAddDto.email, is_deleted = false)
-        return user
     }
 }

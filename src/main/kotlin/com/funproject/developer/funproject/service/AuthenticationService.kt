@@ -3,6 +3,8 @@ package com.funproject.developer.funproject.service
 import com.funproject.developer.funproject.dto.loginDto.LoginRequestDto
 import com.funproject.developer.funproject.dto.loginDto.LoginResponseDto
 import com.funproject.developer.funproject.model.User
+import com.funproject.developer.funproject.model.exception.AuthenticationFailedException
+import com.funproject.developer.funproject.model.exception.UserNotFoundException
 import com.funproject.developer.funproject.repository.UserRepository
 import com.funproject.developer.funproject.security.model.JwtUserDetails
 import com.funproject.developer.funproject.security.service.AuthenticationHelper
@@ -33,18 +35,15 @@ class AuthenticationService @Autowired constructor(
             val authResult = this.authenticationManager!!.authenticate(authRequest)
             if (authResult.isAuthenticated) {
                 val userDetails = authResult.principal as JwtUserDetails
-                val user = userRepository!!.findById(userDetails.getId())
+                val user = userRepository!!.findById(userDetails.getId()).orElse(null)
+                        ?: throw UserNotFoundException("User " + userDetails.getId() + " not found")
                 val token = this.authenticationHelper!!.generateToken(userDetails.getId())
-                val unwrappedUser: User? = user.unwrap()
-                return LoginResponseDto(token, unwrappedUser)
+                return LoginResponseDto(token, user)
             } else {
-                throw JsonException("Authentication failed.")
+                throw AuthenticationFailedException("Authentication failed.")
             }
         } catch (exception: BadCredentialsException) {
             return LoginResponseDto(null, null)
         }
-
     }
-
-    fun <T> Optional<T>.unwrap(): T? = orElse(null)
 }

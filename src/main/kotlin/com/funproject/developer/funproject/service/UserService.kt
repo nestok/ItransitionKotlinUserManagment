@@ -1,7 +1,9 @@
 package com.funproject.developer.funproject.service
 
+import com.funproject.developer.funproject.dto.transformer.userTransformer.ContributorsListTransformer
 import com.funproject.developer.funproject.dto.transformer.userTransformer.UserAddTransformer
 import com.funproject.developer.funproject.dto.transformer.userTransformer.UserListTransformer
+import com.funproject.developer.funproject.dto.userDto.ContributorsListDto
 import com.funproject.developer.funproject.dto.userDto.UserAddDto
 import com.funproject.developer.funproject.dto.userDto.UserListDto
 import com.funproject.developer.funproject.model.exception.EmailNotUniqueException
@@ -22,7 +24,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 class UserService @Autowired constructor(
         private var userRepository: UserRepository,
         private var userAddTransformer: UserAddTransformer,
-        private var userListTransformer: UserListTransformer
+        private var userListTransformer: UserListTransformer,
+        private var contributorsListTransformer: ContributorsListTransformer
 ) {
 
     fun register(userAddDto: UserAddDto) {
@@ -35,6 +38,16 @@ class UserService @Autowired constructor(
         }
         setDefaultSettings(user)
         userRepository.save(user)
+    }
+
+    fun findAllContributors(): ArrayList<ContributorsListDto> {
+        val users = userRepository.findAllExisted()
+        val contributorDtoList = ArrayList<ContributorsListDto>()
+        for (user in users) {
+            val dto = contributorsListTransformer.makeDto(user)
+            contributorDtoList.add(dto)
+        }
+        return contributorDtoList
     }
 
     fun findAllUsers(): ArrayList<UserListDto> {
@@ -53,7 +66,7 @@ class UserService @Autowired constructor(
 
     fun deleteUser(id: Long) {
         val deletedUser: User = userRepository.findById(id).orElse(null)
-                ?: throw UserNotFoundException(id)
+                ?: throw UserNotFoundException("User " + id + " not found")
         if (deletedUser.role == UserRole.ROLE_ADMIN)
             throw AdminDeleteAttemptException("Admin can't be deleted")
         deletedUser.is_deleted = true
@@ -71,7 +84,6 @@ class UserService @Autowired constructor(
 
     private fun setDefaultSettings(user: User) {
         encoder(user)
-        user.role = UserRole.ROLE_USER
     }
 
 }

@@ -1,9 +1,8 @@
 package com.funproject.developer.funproject.controller
 
-import com.funproject.developer.funproject.dto.errorDto.ErrorDto
+import com.funproject.developer.funproject.dto.userDto.ContributorsListDto
 import com.funproject.developer.funproject.dto.userDto.UserAddDto
 import com.funproject.developer.funproject.dto.userDto.UserListDto
-import com.funproject.developer.funproject.model.User
 import com.funproject.developer.funproject.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -28,6 +27,12 @@ class UserController {
     @ResponseStatus(HttpStatus.OK)
     fun register(@RequestBody user: UserAddDto) {
         userService.register(user)
+    }
+
+    @GetMapping("/loadAllContributors")
+    @ResponseStatus(HttpStatus.OK)
+    fun findAllContributors(): ArrayList<ContributorsListDto> {
+        return userService.findAllContributors()
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

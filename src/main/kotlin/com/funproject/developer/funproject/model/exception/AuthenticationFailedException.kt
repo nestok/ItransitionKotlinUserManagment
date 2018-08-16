@@ -1,6 +1,6 @@
-package com.funproject.developer.funproject.service
+package com.funproject.developer.funproject.model.exception
 
-class JsonException : RuntimeException {
+class AuthenticationFailedException : RuntimeException {
 
     constructor(message: String) : super(message) {}
 
