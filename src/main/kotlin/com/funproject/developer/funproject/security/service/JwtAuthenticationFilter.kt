@@ -32,9 +32,7 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Ab
             if (Objects.isNull(token)) {
                 throw BadCredentialsException("Token not found in request's header.")
             }
-
             val authRequest = JwtAuthenticationToken(token)
-
             return this.authenticationManager.authenticate(authRequest)
         } catch (exception: AuthenticationException) {
             unsuccessfulAuthentication(request, response, exception)

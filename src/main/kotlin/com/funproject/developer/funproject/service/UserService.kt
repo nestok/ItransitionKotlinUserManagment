@@ -14,6 +14,7 @@ import com.funproject.developer.funproject.model.exception.AdminDeleteAttemptExc
 import com.funproject.developer.funproject.model.exception.UserNotFoundException
 import com.funproject.developer.funproject.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -25,7 +26,8 @@ class UserService @Autowired constructor(
         private var userRepository: UserRepository,
         private var userAddTransformer: UserAddTransformer,
         private var userListTransformer: UserListTransformer,
-        private var contributorsListTransformer: ContributorsListTransformer
+        private var contributorsListTransformer: ContributorsListTransformer,
+        private var authenticationService: AuthenticationService
 ) {
 
     fun register(userAddDto: UserAddDto) {
@@ -41,7 +43,10 @@ class UserService @Autowired constructor(
     }
 
     fun findAllContributors(): ArrayList<ContributorsListDto> {
+        val currentUser = authenticationService.getCurrentUser() ?: throw UserNotFoundException("User not found")
         val users = userRepository.findAllExisted()
+        if (currentUser.role == UserRole.ROLE_USER)
+            users.remove(currentUser)
         val contributorDtoList = ArrayList<ContributorsListDto>()
         for (user in users) {
             val dto = contributorsListTransformer.makeDto(user)

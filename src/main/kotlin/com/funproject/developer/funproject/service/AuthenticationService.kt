@@ -15,6 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
+
 
 @Service
 @Transactional
@@ -46,4 +49,20 @@ class AuthenticationService @Autowired constructor(
             return LoginResponseDto(null, null)
         }
     }
+
+    @Transactional(readOnly = true)
+    fun getCurrentUser(): User? {
+        val authentication = getAuthenticationWithCheck()
+        return userRepository.findByUsername(authentication.name) ?: return null
+    }
+
+    fun getAuthenticationWithCheck(): Authentication {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val checkAuthenticationExists = authentication != null && authentication.isAuthenticated
+        if (checkAuthenticationExists) {
+            return authentication
+        }
+        throw AuthenticationFailedException("Authentication failed.")
+    }
+
 }
