@@ -29,6 +29,7 @@ class UserController {
         userService.register(user)
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @GetMapping("/loadAllContributors")
     @ResponseStatus(HttpStatus.OK)
     fun findAllContributors(): ArrayList<ContributorsListDto> {

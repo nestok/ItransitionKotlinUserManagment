@@ -70,8 +70,8 @@ class SecurityConfiguration @Autowired constructor(
     @Throws(Exception::class)
     override fun configure(web: WebSecurity?) {
         web!!.ignoring()
-                .antMatchers(HttpMethod.POST, "/auth/**", "/user/register", "/user/loadAllContributors")
-                .antMatchers(HttpMethod.GET, "/auth/**", "/user/register", "/user/loadAllContributors")
+                .antMatchers(HttpMethod.POST, "/auth/**", "/user/register")
+                .antMatchers(HttpMethod.GET, "/auth/**", "/user/register")
                 .antMatchers(HttpMethod.OPTIONS, "/**")
     }
 
