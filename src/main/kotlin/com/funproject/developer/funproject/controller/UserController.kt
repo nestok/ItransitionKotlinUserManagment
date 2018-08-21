@@ -30,7 +30,7 @@ class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    @GetMapping("/loadAllContributors")
+    @GetMapping("/loadAllContributors", produces = arrayOf("application/json"))
     @ResponseStatus(HttpStatus.OK)
     fun findAllContributors(): ArrayList<ContributorsListDto> {
         return userService.findAllContributors()
@@ -41,8 +41,5 @@ class UserController {
     fun deleteUser(@PathVariable(value = "id") id: Long) {
         userService.deleteUser(id)
     }
-
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Cannot operate function")  // 404
-//    inner class ErrorRegisterUserException : RuntimeException()
 
 }
