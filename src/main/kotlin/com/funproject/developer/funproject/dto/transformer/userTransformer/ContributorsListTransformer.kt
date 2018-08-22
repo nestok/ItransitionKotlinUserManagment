@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component
 class ContributorsListTransformer {
 
     fun makeDto(user: User): ContributorsListDto {
-        return ContributorsListDto(id = user.id, firstName = user.firstname, lastName = user.lastname)
+        return ContributorsListDto(id = user.id, firstname = user.firstname, lastname = user.lastname)
     }
 }
