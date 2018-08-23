@@ -3,7 +3,7 @@ package com.funproject.developer.funproject.service
 import com.funproject.developer.funproject.dto.transformer.userTransformer.ContributorsListTransformer
 import com.funproject.developer.funproject.dto.transformer.userTransformer.UserAddTransformer
 import com.funproject.developer.funproject.dto.transformer.userTransformer.UserListTransformer
-import com.funproject.developer.funproject.dto.userDto.ContributorsListDto
+import com.funproject.developer.funproject.dto.userDto.ContributorDto
 import com.funproject.developer.funproject.dto.userDto.UserAddDto
 import com.funproject.developer.funproject.dto.userDto.UserListDto
 import com.funproject.developer.funproject.model.exception.EmailNotUniqueException
@@ -14,7 +14,6 @@ import com.funproject.developer.funproject.model.exception.AdminDeleteAttemptExc
 import com.funproject.developer.funproject.model.exception.UserNotFoundException
 import com.funproject.developer.funproject.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -42,12 +41,12 @@ class UserService @Autowired constructor(
         userRepository.save(user)
     }
 
-    fun findAllContributors(): ArrayList<ContributorsListDto> {
+    fun findAllContributors(): ArrayList<ContributorDto> {
         val currentUser = authenticationService.getCurrentUser() ?: throw UserNotFoundException("User not found")
         val users = userRepository.findAllExisted()
         if (currentUser.role == UserRole.ROLE_USER)
             users.remove(currentUser)
-        val contributorDtoList = ArrayList<ContributorsListDto>()
+        val contributorDtoList = ArrayList<ContributorDto>()
         for (user in users) {
             val dto = contributorsListTransformer.makeDto(user)
             contributorDtoList.add(dto)

@@ -1,6 +1,6 @@
 package com.funproject.developer.funproject.controller
 
-import com.funproject.developer.funproject.dto.userDto.ContributorsListDto
+import com.funproject.developer.funproject.dto.userDto.ContributorDto
 import com.funproject.developer.funproject.dto.userDto.UserAddDto
 import com.funproject.developer.funproject.dto.userDto.UserListDto
 import com.funproject.developer.funproject.service.UserService
@@ -32,7 +32,7 @@ class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @GetMapping("/loadAllContributors", produces = arrayOf("application/json"))
     @ResponseStatus(HttpStatus.OK)
-    fun findAllContributors(): ArrayList<ContributorsListDto> {
+    fun findAllContributors(): ArrayList<ContributorDto> {
         return userService.findAllContributors()
     }
 
