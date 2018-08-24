@@ -18,7 +18,7 @@ class UserController {
     lateinit var userService: UserService
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/loadAll")
+    @GetMapping("/")
     fun findAllUsers(): ArrayList<UserListDto> {
         return userService.findAllUsers()
     }
@@ -30,14 +30,14 @@ class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    @GetMapping("/loadAllContributors", produces = arrayOf("application/json"))
+    @GetMapping("/contributors", produces = arrayOf("application/json"))
     @ResponseStatus(HttpStatus.OK)
     fun findAllContributors(): ArrayList<ContributorDto> {
         return userService.findAllContributors()
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable(value = "id") id: Long) {
         userService.deleteUser(id)
     }

@@ -12,10 +12,6 @@ import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Component
 import java.util.*
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.Claims
-
-
 
 @Component
 @RequiredArgsConstructor

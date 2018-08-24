@@ -38,8 +38,7 @@ class AuthenticationService @Autowired constructor(
             val authResult = this.authenticationManager!!.authenticate(authRequest)
             if (authResult.isAuthenticated) {
                 val userDetails = authResult.principal as JwtUserDetails
-                val user = userRepository!!.findById(userDetails.getId()).orElse(null)
-                        ?: throw UserNotFoundException("User " + userDetails.getId() + " not found")
+                val user = userRepository!!.findById(userDetails.getId()).orElse(null) ?: throw UserNotFoundException("User " + userDetails.getId() + " not found")
                 val token = this.authenticationHelper!!.generateToken(userDetails.getId())
                 return LoginResponseDto(token, user)
             } else {
